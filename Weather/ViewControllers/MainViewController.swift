@@ -3,8 +3,7 @@ import UIKit
 import SDWebImage
 
 class MainViewController: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
-
-    static var shared = MainViewController()
+    
     var daily: Array<WeatherForecast> = Array()
     var weekly: Array<WeatherForecast> = Array()
     var fully: Array<WeatherForecast> = Array()
@@ -23,7 +22,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         scroll.alwaysBounceVertical = true
         scroll.showsVerticalScrollIndicator = false
         view.addSubview(scroll)
-        
         return scroll
     }()
     
@@ -32,10 +30,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         mView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0.5)
         mView.layer.cornerRadius = 20
         mView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //mView.image = UIImage(named: "background")
-        
         scrollView.addSubview(mView)
-        
         return mView
     }()
     
@@ -44,9 +39,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.textColor = .white
         lbl.text = "Tashkent"
         lbl.font = .systemFont(ofSize: 30, weight: .light)
-        
         mainView.addSubview(lbl)
-        
         return lbl
     }()
     
@@ -55,9 +48,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.textColor = .white
         lbl.text = "0°C"
         lbl.font = .systemFont(ofSize: UIScreen.width/4, weight: .ultraLight)
-        
         mainView.addSubview(lbl)
-        
         return lbl
     }()
     
@@ -66,9 +57,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.textColor = .white
         lbl.text = "Clear Sky"
         lbl.font = .systemFont(ofSize: 20, weight: .light)
-        
         mainView.addSubview(lbl)
-        
         return lbl
     }()
     
@@ -77,9 +66,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.textColor = .white
         lbl.text = "Humidity:50%  Wind:1.5m/s"
         lbl.font = .systemFont(ofSize: 20, weight: .light)
-        
         mainView.addSubview(lbl)
-        
         return lbl
     }()
     
@@ -92,7 +79,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
-        
         return collectionView
     }()
     
@@ -105,7 +91,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
-        
         return collectionView
     }()
     
@@ -118,7 +103,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
-        
         return collectionView
     }()
     

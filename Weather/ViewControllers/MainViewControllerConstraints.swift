@@ -76,7 +76,6 @@ extension MainViewController {
             make.height.equalTo(100)
         }
         
-        
     }
 }
 
