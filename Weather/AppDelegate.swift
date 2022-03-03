@@ -15,8 +15,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        setCommonNavBar()
+        
         return true
     }
+    
+    func setCommonNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.shadowColor = .clear
+        appearance.backgroundColor = .black
+        //UINavigationBar.appearance().standardAppearance = appearance
+        //UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().barStyle = .black
+        UINavigationBar.appearance().isHidden = false
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+    }
+
 
     // MARK: UISceneSession Lifecycle
 
