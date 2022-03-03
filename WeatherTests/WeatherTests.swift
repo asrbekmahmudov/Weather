@@ -1,9 +1,3 @@
-//
-//  WeatherTests.swift
-//  WeatherTests
-//
-//  Created by Mahmudov Asrbek Ulug'bek o'g'li on 04/03/22.
-//
 
 import XCTest
 @testable import Weather
