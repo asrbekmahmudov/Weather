@@ -7,7 +7,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     var daily: Array<WeatherForecast> = Array()
     var weekly: Array<WeatherForecast> = Array()
     var fully: Array<WeatherForecast> = Array()
-    let numberOfColumns: CGFloat = 1
     
     lazy var searchBar: UISearchBar = {
         let search = UISearchBar(frame: .zero)
