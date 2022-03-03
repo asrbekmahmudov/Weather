@@ -13,7 +13,6 @@ class WeatherForecastCollectionViewCell: UICollectionViewCell {
     
     lazy var time: UILabel = {
         let lbl = UILabel(frame: .zero)
-        lbl.text = "now"
         lbl.textColor = .white
         mainView.addSubview(lbl)
         return lbl
@@ -27,7 +26,6 @@ class WeatherForecastCollectionViewCell: UICollectionViewCell {
     
     lazy var celsius: UILabel = {
         let lbl = UILabel(frame: .zero)
-        lbl.text = "30°"
         lbl.textColor = .white
         mainView.addSubview(lbl)
         return lbl
