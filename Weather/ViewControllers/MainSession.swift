@@ -14,32 +14,32 @@ extension MainViewController {
        var day = ""
        var currentTemp = ""
        var currentImage = ""
-       
+       var started = false
        for i in response.list {
            for j in i.weather {
-               day = nextDays(date: i.dt_txt).day
-               fully.append(WeatherForecast(time: day, image: "https://openweathermap.org/img/wn/\(j.icon)@2x.png", celsius: String(Int(round(i.main.temp))) + "°"))
-               
-               DispatchQueue.main.async { [self] in
-                   fullyForecastCollectionView.reloadData()
-               }
                if let time = getDateText(date: i.dt_txt, main: i, weather: j, city: city) {
+                   guard time == "now" || started else {
+                       continue
+                   }
+                   started = true
+
+                   daily.append(WeatherForecast(time: time, image: "https://openweathermap.org/img/wn/\(j.icon)@2x.png", celsius: String(Int(round(i.main.temp))) + "°"))
+                    
+                    DispatchQueue.main.async { [self] in
+                        dailyForecastCollectionView.reloadData()
+                    }
+                   
                    if currentTemp.isEmpty {
                        currentTemp = "\(Int(round(i.main.temp)))°"
                        currentImage = "\(j.icon)"
-                       
-                      weekly.append(WeatherForecast(time: "today", image: "https://openweathermap.org/img/wn/\(currentImage)@2x.png", celsius: currentTemp))
-                       
-                       DispatchQueue.main.async { [self] in
-                           weeklyForecastCollectionView.reloadData()
-                       }
+                       weekly.append(WeatherForecast(time: "today", image: "https://openweathermap.org/img/wn/\(currentImage)@2x.png", celsius: currentTemp))
+                        
+                        DispatchQueue.main.async { [self] in
+                            weeklyForecastCollectionView.reloadData()
+                        }
                    }
+                   print(time)
                    
-                  daily.append(WeatherForecast(time: time, image: "https://openweathermap.org/img/wn/\(j.icon)@2x.png", celsius: String(Int(round(i.main.temp))) + "°"))
-                   
-                   DispatchQueue.main.async { [self] in
-                       dailyForecastCollectionView.reloadData()
-                   }
                } else if nextDays(date: i.dt_txt).isNextDays && nextDays(date: i.dt_txt).time == "12" {
                    day = nextDays(date: i.dt_txt).day
                    currentTemp = "\(Int(round(i.main.temp)))°"
@@ -49,6 +49,14 @@ extension MainViewController {
                    
                    DispatchQueue.main.async { [self] in
                        weeklyForecastCollectionView.reloadData()
+                   }
+               }
+               if started {
+                   day = nextDays(date: i.dt_txt).day
+                   fully.append(WeatherForecast(time: day, image: "https://openweathermap.org/img/wn/\(j.icon)@2x.png", celsius: String(Int(round(i.main.temp))) + "°"))
+                   
+                   DispatchQueue.main.async { [self] in
+                       fullyForecastCollectionView.reloadData()
                    }
                }
            }

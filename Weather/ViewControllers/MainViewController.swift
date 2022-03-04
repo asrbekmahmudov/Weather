@@ -55,7 +55,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
         lbl.text = "Clear Sky"
-        lbl.font = .systemFont(ofSize: 20, weight: .light)
+        lbl.font = .systemFont(ofSize: 20, weight: .regular)
         mainView.addSubview(lbl)
         return lbl
     }()
@@ -64,7 +64,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
         lbl.text = "Humidity:50%  Wind:1.5m/s"
-        lbl.font = .systemFont(ofSize: 20, weight: .light)
+        lbl.font = .systemFont(ofSize: 20, weight: .regular)
         mainView.addSubview(lbl)
         return lbl
     }()

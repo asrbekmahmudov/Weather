@@ -68,7 +68,7 @@ extension MainViewController {
                     lblPlace.text = city
                     lbltemp.text = "\(Int(round(main.main.temp)))°C"
                     lblmain.text = weather.main.description
-                    lblhumiditywind.text = "H:\(Int(round(main.main.humidity)))%  W:\(Int(round(main.wind.speed)))m/s"
+                    lblhumiditywind.text = "Humidity:\(Int(round(main.main.humidity)))%  Wind:\(Int(round(main.wind.speed)))m/s"
                 }
                 return "now"
             } else {
