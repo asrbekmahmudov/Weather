@@ -37,6 +37,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
         lbl.text = "Tashkent"
+        view.contentMode = .scaleAspectFill
         lbl.font = .systemFont(ofSize: 30, weight: .light)
         mainView.addSubview(lbl)
         return lbl
@@ -46,7 +47,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
         lbl.text = "0°C"
-        lbl.font = .systemFont(ofSize: UIScreen.width/4, weight: .ultraLight)
+        lbl.font = .systemFont(ofSize: UIDevice.current.orientation.isLandscape ? UIScreen.height/4 : UIScreen.width/4, weight: .ultraLight)
         mainView.addSubview(lbl)
         return lbl
     }()
@@ -121,7 +122,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         return lbl
     }()
     
-    lazy var lblMonthlyForecast: UILabel = {
+    lazy var lblFullyForecast: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.text = "All Forecast"
         lbl.textColor = .white
@@ -177,18 +178,21 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         
         if let flowLayout = dailyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
+            flowLayout.sectionInset.left = 15
         }
         
         self.weeklyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
                 
         if let flowLayout = weeklyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
+            flowLayout.sectionInset.left = 15
         }
         
         self.fullyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
         
         if let flowLayout = fullyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
+            flowLayout.sectionInset.left = 15
         }
         
     }
@@ -240,9 +244,4 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         }
         return cell
     }
-}
-
-extension UIScreen {
-    static let width = UIScreen.main.bounds.width
-    static let height = UIScreen.main.bounds.height
 }
