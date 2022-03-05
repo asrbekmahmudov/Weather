@@ -179,6 +179,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         if let flowLayout = dailyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
             flowLayout.sectionInset.left = 15
+            flowLayout.sectionInset.right = 15
         }
         
         self.weeklyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
@@ -186,6 +187,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         if let flowLayout = weeklyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
             flowLayout.sectionInset.left = 15
+            flowLayout.sectionInset.right = 15
         }
         
         self.fullyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
@@ -193,6 +195,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         if let flowLayout = fullyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
             flowLayout.sectionInset.left = 15
+            flowLayout.sectionInset.right = 15
         }
         
     }
