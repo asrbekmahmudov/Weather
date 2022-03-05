@@ -70,11 +70,13 @@ extension MainViewController {
                     lblmain.text = weather.main.description
                     lblhumiditywind.text = "Humidity:\(Int(round(main.main.humidity)))%  Wind:\(Int(round(main.wind.speed)))m/s"
                 }
+                
                 return "now"
             } else {
                 return formatDateHourly(date_text: date, city: city).time
             }
         }
+        
         return nil
     }
 }

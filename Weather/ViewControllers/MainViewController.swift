@@ -13,6 +13,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         search.placeholder = "Search"
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         search.searchTextField.backgroundColor = .systemGray4
+        
         return search
     }()
     
@@ -21,6 +22,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         scroll.alwaysBounceVertical = true
         scroll.showsVerticalScrollIndicator = false
         view.addSubview(scroll)
+        
         return scroll
     }()
     
@@ -30,43 +32,44 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         mView.layer.cornerRadius = 20
         mView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         scrollView.addSubview(mView)
+        
         return mView
     }()
     
     lazy var lblPlace: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
-        lbl.text = "Tashkent"
         view.contentMode = .scaleAspectFill
         lbl.font = .systemFont(ofSize: 30, weight: .light)
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
     lazy var lbltemp: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
-        lbl.text = "0°C"
         lbl.font = .systemFont(ofSize: UIDevice.current.orientation.isLandscape ? UIScreen.height/4 : UIScreen.width/4, weight: .ultraLight)
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
     lazy var lblmain: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
-        lbl.text = "Clear Sky"
         lbl.font = .systemFont(ofSize: 20, weight: .regular)
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
     lazy var lblhumiditywind: UILabel = {
         let lbl = UILabel(frame: .zero)
         lbl.textColor = .white
-        lbl.text = "Humidity:50%  Wind:1.5m/s"
         lbl.font = .systemFont(ofSize: 20, weight: .regular)
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
@@ -79,6 +82,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
+        
         return collectionView
     }()
     
@@ -91,6 +95,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
+        
         return collectionView
     }()
     
@@ -103,6 +108,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         collectionView.backgroundColor = .init(red: 0.5, green: 0.7, blue: 1, alpha: 0)
         collectionView.showsHorizontalScrollIndicator = false
         mainView.addSubview(collectionView)
+        
         return collectionView
     }()
     
@@ -111,6 +117,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.text = "Daily Forecast"
         lbl.textColor = .white
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
@@ -119,6 +126,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.text = "Weekly Forecast"
         lbl.textColor = .white
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
@@ -127,6 +135,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         lbl.text = "All Forecast"
         lbl.textColor = .white
         mainView.addSubview(lbl)
+        
         return lbl
     }()
     
@@ -174,7 +183,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         fullyForecastCollectionView.delegate = self
         fullyForecastCollectionView.dataSource = self
         
-        self.dailyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.dailyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         
         if let flowLayout = dailyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
@@ -182,7 +191,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
             flowLayout.sectionInset.right = 15
         }
         
-        self.weeklyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.weeklyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
                 
         if let flowLayout = weeklyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
@@ -190,7 +199,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
             flowLayout.sectionInset.right = 15
         }
         
-        self.fullyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.fullyForecastCollectionView.register(UINib(nibName: "WeatherForecastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         
         if let flowLayout = fullyForecastCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.itemSize = CGSize(width: 50, height: 100)
@@ -208,43 +217,30 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
         } else if collectionView == self.fullyForecastCollectionView {
             return fully.count
         }
+        
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: WeatherForecastCollectionViewCell!
-        
-        if collectionView == self.dailyForecastCollectionView {
-            
-            let day = daily[indexPath.row]
-            let dailyCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherForecastCollectionViewCell
-            dailyCell.time.text = day.time
-            let url = URL.init(string: day.image!)
-            dailyCell.image.sd_setImage(with: url, placeholderImage: nil)
-            dailyCell.celsius.text = day.celsius
-            cell = dailyCell
-            
-        } else if collectionView == self.weeklyForecastCollectionView {
-            
-            let week = weekly[indexPath.row]
-            let weeklyCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherForecastCollectionViewCell
-            weeklyCell.time.text = week.time
-            let url = URL.init(string: week.image!)
-            weeklyCell.image.sd_setImage(with: url, placeholderImage: nil)
-            weeklyCell.celsius.text = week.celsius
-            cell = weeklyCell
-            
-        } else if collectionView == self.fullyForecastCollectionView {
-            
-            let ful = fully[indexPath.row]
-            let fullyCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! WeatherForecastCollectionViewCell
-            fullyCell.time.text = ful.time
-            let url = URL.init(string: ful.image!)
-            fullyCell.image.sd_setImage(with: url, placeholderImage: nil)
-            fullyCell.celsius.text = ful.celsius
-            cell = fullyCell
-            
+        let weatherItem = { [self] () -> WeatherForecast in
+            switch collectionView {
+            case dailyForecastCollectionView:
+                return daily[indexPath.row]
+            case weeklyForecastCollectionView:
+                return weekly[indexPath.row]
+            default:
+                return fully[indexPath.row]
+            }
         }
+        
+        let weatherForecast: WeatherForecast! = weatherItem()
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherForecastCollectionViewCell
+        cell.time.text = weatherForecast.time
+        let url = URL.init(string: weatherForecast.image!)
+        cell.image.sd_setImage(with: url, placeholderImage: nil)
+        cell.celsius.text = weatherForecast.celsius
+        
         return cell
     }
 }

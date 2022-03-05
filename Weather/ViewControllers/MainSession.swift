@@ -22,30 +22,28 @@ extension MainViewController {
                        continue
                    }
                    started = true
-
+                   
                    daily.append(WeatherForecast(time: time, image: "https://openweathermap.org/img/wn/\(j.icon)@2x.png", celsius: String(Int(round(i.main.temp))) + "°"))
-                    
-                    DispatchQueue.main.async { [self] in
-                        dailyForecastCollectionView.reloadData()
-                    }
+                   
+                   DispatchQueue.main.async { [self] in
+                       dailyForecastCollectionView.reloadData()
+                   }
                    
                    if currentTemp.isEmpty {
                        currentTemp = "\(Int(round(i.main.temp)))°"
                        currentImage = "\(j.icon)"
                        weekly.append(WeatherForecast(time: "today", image: "https://openweathermap.org/img/wn/\(currentImage)@2x.png", celsius: currentTemp))
-                        
-                        DispatchQueue.main.async { [self] in
-                            weeklyForecastCollectionView.reloadData()
-                        }
+                       
+                       DispatchQueue.main.async { [self] in
+                           weeklyForecastCollectionView.reloadData()
+                       }
                    }
-                   print(time)
-                   
                } else if nextDays(date: i.dt_txt).isNextDays && nextDays(date: i.dt_txt).time == "12" {
                    day = nextDays(date: i.dt_txt).day
                    currentTemp = "\(Int(round(i.main.temp)))°"
                    currentImage = "\(j.icon)"
                    
-                  weekly.append(WeatherForecast(time: day, image: "https://openweathermap.org/img/wn/\(currentImage)@2x.png", celsius: currentTemp))
+                   weekly.append(WeatherForecast(time: day, image: "https://openweathermap.org/img/wn/\(currentImage)@2x.png", celsius: currentTemp))
                    
                    DispatchQueue.main.async { [self] in
                        weeklyForecastCollectionView.reloadData()
@@ -66,16 +64,16 @@ extension MainViewController {
    func pullJSONData(url: URL?, city: String) {
        let task = URLSession.shared.dataTask(with: url!) { [self] data, response, error in
            if let error = error {
-               print("Error : \(error.localizedDescription)")
+               print("Error: \(error.localizedDescription)")
            }
            
            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-               print("Error : HTTP Response Code Error")
+               print("Error: HTTP Response Code Error")
                return
            }
            
            guard let data = data else {
-               print("Error : No Response")
+               print("Error: No Response")
                return
            }
            
