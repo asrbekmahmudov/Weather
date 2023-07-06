@@ -151,7 +151,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     // MARK: - Methods
     func setUpDate() {
         let city: String = "Tashkent"
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?q=\(formatCity(city: city))&appid=4bc66af9997a97a30a70d011205e7736&units=metric")
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?q=\(formatCity(city: city))&appid=6398b11ebe5652355374063419c470c7&units=metric")
         pullJSONData(url: url, city: "Tashkent")
     }
     
@@ -163,7 +163,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let city: String = searchBar.text!
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?q=\(formatCity(city: city))&appid=4bc66af9997a97a30a70d011205e7736&units=metric")
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/forecast?q=\(formatCity(city: city))&appid=6398b11ebe5652355374063419c470c7&units=metric")
          
         pullJSONData(url: url, city: city)
         searchBar.resignFirstResponder()
@@ -222,14 +222,14 @@ class MainViewController: UIViewController, UISearchBarDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let weatherItem = { [self] () -> WeatherForecast in
+        let weatherItem = { () -> WeatherForecast in
             switch collectionView {
-            case dailyForecastCollectionView:
-                return daily[indexPath.row]
-            case weeklyForecastCollectionView:
-                return weekly[indexPath.row]
+            case self.dailyForecastCollectionView:
+                return self.daily[indexPath.row]
+            case self.weeklyForecastCollectionView:
+                return self.weekly[indexPath.row]
             default:
-                return fully[indexPath.row]
+                return self.fully[indexPath.row]
             }
         }
         

@@ -13,8 +13,38 @@
 #import "UIImage+Metadata.h"
 #import "SDInternalMacros.h"
 
-UIImage * _Nullable SDImageCacheDecodeImageData(NSData * _Nonnull imageData, NSString * _Nonnull cacheKey, SDWebImageOptions options, SDWebImageContext * _Nullable context) {
-    UIImage *image;
+static NSArray<NSString *>* GetKnownContextOptions(void) {
+    static NSArray<NSString *> *knownContextOptions;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        knownContextOptions =
+        [NSArray arrayWithObjects:
+         SDWebImageContextSetImageOperationKey,
+         SDWebImageContextCustomManager,
+         SDWebImageContextImageCache,
+         SDWebImageContextImageLoader,
+         SDWebImageContextImageCoder,
+         SDWebImageContextImageTransformer,
+         SDWebImageContextImageScaleFactor,
+         SDWebImageContextImagePreserveAspectRatio,
+         SDWebImageContextImageThumbnailPixelSize,
+         SDWebImageContextQueryCacheType,
+         SDWebImageContextStoreCacheType,
+         SDWebImageContextOriginalQueryCacheType,
+         SDWebImageContextOriginalStoreCacheType,
+         SDWebImageContextOriginalImageCache,
+         SDWebImageContextAnimatedImageClass,
+         SDWebImageContextDownloadRequestModifier,
+         SDWebImageContextDownloadResponseModifier,
+         SDWebImageContextDownloadDecryptor,
+         SDWebImageContextCacheKeyFilter,
+         SDWebImageContextCacheSerializer
+         , nil];
+    });
+    return knownContextOptions;
+}
+
+SDImageCoderOptions * _Nonnull SDGetDecodeOptionsFromContext(SDWebImageContext * _Nullable context, SDWebImageOptions options, NSString * _Nonnull cacheKey) {
     BOOL decodeFirstFrame = SD_OPTIONS_CONTAINS(options, SDWebImageDecodeFirstFrameOnly);
     NSNumber *scaleValue = context[SDWebImageContextImageScaleFactor];
     CGFloat scale = scaleValue.doubleValue >= 1 ? scaleValue.doubleValue : SDImageScaleFactorForKey(cacheKey);
@@ -35,8 +65,22 @@ UIImage * _Nullable SDImageCacheDecodeImageData(NSData * _Nonnull imageData, NSS
     mutableCoderOptions[SDImageCoderDecodeScaleFactor] = @(scale);
     mutableCoderOptions[SDImageCoderDecodePreserveAspectRatio] = preserveAspectRatioValue;
     mutableCoderOptions[SDImageCoderDecodeThumbnailPixelSize] = thumbnailSizeValue;
-    mutableCoderOptions[SDImageCoderWebImageContext] = context;
+    // Hack to remove all known context options before SDWebImage 5.14.0
+    SDImageCoderMutableOptions *mutableContext = [NSMutableDictionary dictionaryWithDictionary:context];
+    [mutableContext removeObjectsForKeys:GetKnownContextOptions()];
+    mutableCoderOptions[SDImageCoderWebImageContext] = [mutableContext copy];
     SDImageCoderOptions *coderOptions = [mutableCoderOptions copy];
+    
+    return coderOptions;
+}
+
+UIImage * _Nullable SDImageCacheDecodeImageData(NSData * _Nonnull imageData, NSString * _Nonnull cacheKey, SDWebImageOptions options, SDWebImageContext * _Nullable context) {
+    NSCParameterAssert(imageData);
+    NSCParameterAssert(cacheKey);
+    UIImage *image;
+    SDImageCoderOptions *coderOptions = SDGetDecodeOptionsFromContext(context, options, cacheKey);
+    BOOL decodeFirstFrame = SD_OPTIONS_CONTAINS(options, SDWebImageDecodeFirstFrameOnly);
+    CGFloat scale = [coderOptions[SDImageCoderDecodeScaleFactor] doubleValue];
     
     // Grab the image coder
     id<SDImageCoder> imageCoder;
@@ -79,6 +123,8 @@ UIImage * _Nullable SDImageCacheDecodeImageData(NSData * _Nonnull imageData, NSS
         if (shouldDecode) {
             image = [SDImageCoderHelper decodedImageWithImage:image];
         }
+        // assign the decode options, to let manager check whether to re-decode if needed
+        image.sd_decodeOptions = coderOptions;
     }
     
     return image;
